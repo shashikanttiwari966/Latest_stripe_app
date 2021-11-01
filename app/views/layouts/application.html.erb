@@ -1,13 +1,15 @@
 <html>
-  <head>
-    <title>StripeAppication</title>
+   <head>
+    <title>Somesh </title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+  
+  </head
   <% if notice %>
     <p class="alert alert-success"><%= notice %></p>
   <% end %>
@@ -18,7 +20,7 @@
 <% if user_signed_in? %>
   Logged in as <strong><%= current_user.email %></strong>.
   <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
-  <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+  <%= button_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
    <h1>Shopping cart</h1>
       <% @cart.each do |product| %>
         <%= product.name %>
@@ -26,7 +28,8 @@
       <% end %>
       <% if @cart.present? %>
         <%= @cart.collect { |item| item.to_builder.attributes! } %>
-        <%= button_to "Buy now!", checkout_create_path, remote: true, data: { disable_with: "validating..."} %>
+        <%= button_to "Buy now!", checkouts_create_path, data: { disable_with: "validating..."} %>
+
       <% end %>
       <hr>
 <% else %>
@@ -34,19 +37,7 @@
   <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
 <% end %>
 </p>
-<!-- <div class="jumbotron jumbotron-fluid">
-  <div class="container">
-  <h1>Shopping cart</h1>
-  <%# @cart.each do |product| %>
-    <%#= product.name %>
-    <br>
-  <%# end %>
-     <%# if @cart.present? %>
-        <%#= @cart.collect { |item| item.to_builder.attributes! } %>
-     <%#= button_to "Buy now!", checkout_create_path, remote: true, data: { disable_with: "validating..."},class:"btn btn-success" %>
-  <%# end %>
- </div>
-</div> -->
+
 
   <body>
     <%= yield %>
