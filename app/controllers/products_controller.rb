@@ -2,12 +2,14 @@ class ProductsController < ApplicationController
   before_action :set_product, only: %i[ show update destroy ]
 
   def add_to_cart
+    debugger
     id = params[:id].to_i
     session[:cart] << id unless session[:cart].include?(id)
     redirect_to products_path
   end
 
   def remove_from_cart
+    debugger
     id = params[:id].to_i
     session[:cart].delete(id)
     redirect_to products_path

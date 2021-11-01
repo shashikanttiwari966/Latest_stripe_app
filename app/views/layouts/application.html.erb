@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
   <head>
     <title>StripeAppication</title>
@@ -20,6 +19,16 @@
   Logged in as <strong><%= current_user.email %></strong>.
   <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
   <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+   <h1>Shopping cart</h1>
+      <% @cart.each do |product| %>
+        <%= product.name %>
+        <br>
+      <% end %>
+      <% if @cart.present? %>
+        <%= @cart.collect { |item| item.to_builder.attributes! } %>
+        <%= button_to "Buy now!", checkout_create_path, remote: true, data: { disable_with: "validating..."} %>
+      <% end %>
+      <hr>
 <% else %>
   <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
   <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
