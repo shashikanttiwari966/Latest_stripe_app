@@ -1,9 +1,10 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: %i[ show update destroy ]
+  before_action :set_product, only: %i[ show update destroy edit]
 
   def add_to_cart
     id = params[:id].to_i
-    session[:cart] << id unless session[:cart].include?(id)
+    session[:cart] << id 
+    # unless session[:cart].include?(id)
     redirect_to products_path
   end
 
@@ -15,6 +16,13 @@ class ProductsController < ApplicationController
 
   def index
     @products = Product.all
+    if request.xhr? || request.format.js?
+      if params[:search].present?
+        @products = @products.where("lower(name) LIKE :search", search:"%#{params[:search].downcase}%")
+        # render(template:  'products/_product_list', layout: false)
+        render :index
+      end
+    end
   end
 
   def show
@@ -31,6 +39,9 @@ class ProductsController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
+  end
+
+  def edit  
   end
 
   def update
